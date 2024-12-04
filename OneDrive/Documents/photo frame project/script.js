@@ -3,39 +3,36 @@ document.getElementById('imageInput').addEventListener('change', function(event)
     if (file) {
         const reader = new FileReader();
         reader.onload = function(e) {
-            const uploadedImage = document.getElementById('uploadedImage');
+            const uploadedImage = new Image();
             uploadedImage.src = e.target.result;
-            uploadedImage.style.display = 'block';  // Show the uploaded image
+            uploadedImage.onload = function() {
+                const canvas = document.getElementById('canvas');
+                const ctx = canvas.getContext('2d');
+                
+                // Gambar frame
+                const photoFrame = new Image();
+                photoFrame.src = 'photo_frame.png';
+                photoFrame.onload = function() {
+                    // Lukis frame dan gambar
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(photoFrame, 0, 0, canvas.width, canvas.height);  // Gambar frame
+                    ctx.drawImage(uploadedImage, 50, 50, 200, 300);  // Gambar yang dimuat naik
+                    
+                    // Butang download kini aktif
+                    document.getElementById('downloadBtn').disabled = false;
+                };
+            };
         };
         reader.readAsDataURL(file);
     }
 });
 
+// Fungsi untuk muat turun gambar
 document.getElementById('downloadBtn').addEventListener('click', function() {
-    const uploadedImage = document.getElementById('uploadedImage');
-    const photoFrame = document.getElementById('photoFrame');
-
-    if (uploadedImage.src) {
-        // Create a canvas to combine the images
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        
-        // Set the canvas size to match the frame size
-        canvas.width = photoFrame.width;
-        canvas.height = photoFrame.height;
-
-        // Draw the photo frame
-        ctx.drawImage(photoFrame, 0, 0, canvas.width, canvas.height);
-
-        // Draw the uploaded image on top of the frame
-        ctx.drawImage(uploadedImage, 0, 0, canvas.width, canvas.height);
-
-        // Create a downloadable link
-        const link = document.createElement('a');
-        link.href = canvas.toDataURL('image/png');  // Get the image from canvas
-        link.download = 'combined_image.png';
-        link.click();
-    } else {
-        alert('No image to download');
-    }
+    const canvas = document.getElementById('canvas');
+    const imageUrl = canvas.toDataURL('image/png');
+    const link = document.createElement('a');
+    link.href = imageUrl;
+    link.download = 'combined_image.png';
+    link.click();
 });
