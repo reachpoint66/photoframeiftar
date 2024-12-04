@@ -9,14 +9,14 @@
 <body>
     <div class="container">
         <div class="frame">
-            <img id="photoFrame" src="photo_frame.png" alt="Photo Frame">
-            <img id="uploadedImage" src="" alt="Uploaded Image" />
+            <img id="photoFrame" src="photo_frame.png" alt="Photo Frame" style="display: none;">
+            <img id="uploadedImage" src="" alt="Uploaded Image" style="display: none;">
         </div>
 
         <input type="file" id="imageInput" class="upload-btn" accept="image/*">
         <button id="downloadBtn" class="download-btn">Download Image</button>
         
-        <!-- Canvas to create the image with frame -->
+        <!-- Canvas to combine frame and uploaded image -->
         <canvas id="canvas" style="display:none;"></canvas>
     </div>
 

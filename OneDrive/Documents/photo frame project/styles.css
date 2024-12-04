@@ -1,68 +1,47 @@
 body {
     font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     margin: 0;
-    padding: 0;
     background-color: #f4f4f4;
 }
 
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding: 20px;
+    text-align: center;
 }
 
 .frame {
     position: relative;
-    width: 300px;
-    height: 400px;
-    background-color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 2px solid #000;
-}
-
-#photoFrame {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+    display: inline-block;
 }
 
 #uploadedImage {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: cover;
-    display: none;
+    width: 300px;
+    height: 400px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#photoFrame {
+    width: 300px;
+    height: 400px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
 }
 
 .upload-btn {
     margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
+    padding: 10px;
     font-size: 16px;
-    border-radius: 5px;
-}
-
-.upload-btn:hover {
-    background-color: #45a049;
 }
 
 .download-btn {
     margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #008CBA;
-    color: white;
-    border: none;
-    cursor: pointer;
+    padding: 10px;
     font-size: 16px;
-    border-radius: 5px;
-}
-
-.download-btn:hover {
-    background-color: #007B9A;
 }
