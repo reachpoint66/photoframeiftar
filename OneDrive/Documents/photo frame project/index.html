@@ -56,9 +56,9 @@
         // Function to handle the download of the image
         downloadBtn.addEventListener("click", () => {
             const downloadLink = document.createElement("a");
-            downloadLink.href = imageFrame.src;
-            downloadLink.download = "custom_frame_image.png"; // Specify the image filename
-            downloadLink.click();
+            downloadLink.href = imageFrame.src; // Gambar yang dipaparkan dalam frame
+            downloadLink.download = "custom_frame_image.png"; // Nama fail untuk dimuat turun
+            downloadLink.click(); // Lakukan klik untuk memulakan muat turun
         });
     </script>
 </body>
