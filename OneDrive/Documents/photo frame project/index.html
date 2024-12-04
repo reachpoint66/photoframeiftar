@@ -3,38 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Photo Frame</title>
-    <link rel="stylesheet" href="styles.css"> <link rel="stylesheet" href="styles.css">
+    <title>Photo Frame Upload & Download</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <h1>Upload Image to Photo Frame</h1>
-
-    <!-- Butang Upload -->
-    <input type="file" id="imageUpload" accept="image/*">
-
-    <!-- Gambar akan dipaparkan di sini -->
-    <div id="imageContainer">
-        <img id="frame" src="photo_frame.png" alt="Photo Frame" />
-        <img id="uploadedImage" src="" alt="Uploaded Image" style="display: none;" />
+    <!-- Photo Frame Container -->
+    <div id="photo-frame-container">
+        <div id="photo-frame"></div>
     </div>
 
+    <!-- Input dan Butang Upload -->
+    <input type="file" id="uploadInput" accept="image/*" style="display: none;">
+    <button id="uploadBtn">Upload Image</button>
+
     <!-- Butang Download -->
-    <button id="downloadBtn">Download Image</button>
-
-    <script src="script.js"></script> <script src="script.js"></script>
-</body>
-</html>
-
-<body>
-    <!-- Butang upload -->
-    <input type="file" id="uploadBtn" accept="image/*">
-    
-    <!-- Photo frame di belakang -->
-    <div id="photo-frame"></div>
-
-    <!-- Butang download -->
-    <button id="downloadBtn">Download Image</button>
+    <button id="downloadBtn" style="display: none;">Download Image</button>
 
     <script src="script.js"></script>
 </body>
+</html>

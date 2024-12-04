@@ -1,37 +1,33 @@
-// Mengendalikan muat naik gambar
-document.getElementById('imageUpload').addEventListener('change', function(event) {
+// Get references to the elements
+const uploadInput = document.getElementById("uploadInput");
+const uploadBtn = document.getElementById("uploadBtn");
+const downloadBtn = document.getElementById("downloadBtn");
+const photoFrame = document.getElementById("photo-frame");
+
+// Event listener for upload button
+uploadBtn.addEventListener("click", () => {
+    uploadInput.click(); // Trigger file input click
+});
+
+// Event listener for file input change (when user selects a file)
+uploadInput.addEventListener("change", (event) => {
     const file = event.target.files[0];
     if (file) {
         const reader = new FileReader();
-        reader.onload = function(e) {
-            // Memaparkan gambar yang dimuat naik di dalam frame
-            const uploadedImage = document.getElementById('uploadedImage');
-            uploadedImage.src = e.target.result;
-            uploadedImage.style.display = 'block';
+        reader.onload = function (e) {
+            // Set the photo frame background to the uploaded image
+            photoFrame.style.backgroundImage = `url(${e.target.result})`;
+            downloadBtn.style.display = "inline";  // Show the download button
         };
         reader.readAsDataURL(file);
     }
 });
 
-// Fungsi untuk muat turun gambar
-document.getElementById('downloadBtn').addEventListener('click', function() {
-    const frame = document.getElementById('frame');
-    const uploadedImage = document.getElementById('uploadedImage');
-
-    // Buat kanvas untuk gambar
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = frame.width;
-    canvas.height = frame.height;
-
-    // Lukis gambar frame dan gambar yang dimuat naik ke kanvas
-    ctx.drawImage(frame, 0, 0, frame.width, frame.height);
-    ctx.drawImage(uploadedImage, 25, 25, uploadedImage.width, uploadedImage.height); // Sesuaikan kedudukan gambar
-
-    // Membuat gambar dari kanvas dan muat turun
-    const dataUrl = canvas.toDataURL('image/png');
-    const a = document.createElement('a');
-    a.href = dataUrl;
-    a.download = 'photo_frame_with_image.png';
-    a.click();
+// Event listener for download button
+downloadBtn.addEventListener("click", () => {
+    const imageUrl = photoFrame.style.backgroundImage.slice(5, -2);  // Extract image URL
+    const link = document.createElement("a");
+    link.href = imageUrl;
+    link.download = "photo_frame_image.jpg";  // Download filename
+    link.click();
 });
