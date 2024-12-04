@@ -2,3 +2,26 @@
 *.tmp
 .env
 node_modules/
+
+# Ignore specific folders
+AppData/
+OneDrive/
+Desktop/
+Downloads/
+Videos/
+*.log
+*.tmp
+
+# Ignore specific directories and files
+.gitconfig
+AppData/
+OneDrive/
+Desktop/
+Downloads/
+Music/
+Videos/
+Saved Games/
+Searches/
+Pictures/
+*.log
+NTUSER.DAT
