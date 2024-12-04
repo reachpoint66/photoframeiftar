@@ -1,40 +1,65 @@
-<script>
-    const fileInput = document.getElementById("fileInput");
-    const imageFrame = document.getElementById("imageFrame");
-    const downloadBtn = document.getElementById("downloadBtn");
-    const canvas = document.getElementById("imageCanvas");
-    const ctx = canvas.getContext("2d");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Frame Project</title>
+</head>
+<body>
+    <h1>Upload Your Image to the Frame</h1>
 
-    // Function to handle the image upload
-    fileInput.addEventListener("change", (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const img = new Image();
-                img.onload = function () {
-                    // Set canvas size to match the frame size
-                    canvas.width = imageFrame.width;
-                    canvas.height = imageFrame.height;
+    <!-- Input to upload image -->
+    <input type="file" id="fileInput" accept="image/*">
+    
+    <!-- Image frame -->
+    <div id="frameContainer" style="width: 600px; height: 400px; overflow: hidden; border: 2px solid #000;">
+        <img id="imageFrame" style="width: 100%; height: 100%;" src="" alt="Your Image Will Appear Here">
+    </div>
+    
+    <!-- Download button -->
+    <button id="downloadBtn" style="margin-top: 20px;">Download Image</button>
+    
+    <canvas id="imageCanvas" style="display:none;"></canvas>
+    
+    <script>
+        const fileInput = document.getElementById("fileInput");
+        const imageFrame = document.getElementById("imageFrame");
+        const downloadBtn = document.getElementById("downloadBtn");
+        const canvas = document.getElementById("imageCanvas");
+        const ctx = canvas.getContext("2d");
 
-                    // Draw the image inside the frame
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        // Function to handle image upload
+        fileInput.addEventListener("change", (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = new Image();
+                    img.onload = function () {
+                        // Set canvas size to match frame size
+                        canvas.width = 600; // Set to the frame width
+                        canvas.height = 400; // Set to the frame height
 
-                    // Set the image frame to show the uploaded image
-                    imageFrame.src = canvas.toDataURL();
+                        // Draw the image inside the frame
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                        // Set the image frame to show the uploaded image
+                        imageFrame.src = canvas.toDataURL();
+                    };
+                    img.src = e.target.result;
                 };
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-    });
+                reader.readAsDataURL(file);
+            }
+        });
 
-    // Function to handle the download of the image
-    downloadBtn.addEventListener("click", () => {
-        const downloadLink = document.createElement("a");
-        downloadLink.href = imageFrame.src; // Gambar yang dipaparkan dalam frame
-        downloadLink.download = "custom_frame_image.png"; // Nama fail untuk dimuat turun
-        downloadLink.click(); // Lakukan klik untuk memulakan muat turun
-    });
-</script>
+        // Function to handle download of the image
+        downloadBtn.addEventListener("click", () => {
+            const downloadLink = document.createElement("a");
+            downloadLink.href = imageFrame.src; // The image shown in the frame
+            downloadLink.download = "custom_frame_image.png"; // The filename for download
+            downloadLink.click(); // Trigger the download
+        });
+    </script>
+</body>
+</html>
