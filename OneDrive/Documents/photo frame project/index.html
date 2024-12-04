@@ -3,22 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Photo Frame Upload & Download</title>
+    <title>Photo Frame Upload and Download</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="container">
+        <div class="frame">
+            <img id="photoFrame" src="photo_frame.png" alt="Photo Frame">
+            <img id="uploadedImage" src="" alt="Uploaded Image" />
+        </div>
 
-    <!-- Photo Frame Container -->
-    <div id="photo-frame-container">
-        <div id="photo-frame"></div>
+        <input type="file" id="imageInput" class="upload-btn" accept="image/*">
+        <button id="downloadBtn" class="download-btn">Download Image</button>
     </div>
-
-    <!-- Input dan Butang Upload -->
-    <input type="file" id="uploadInput" accept="image/*" style="display: none;">
-    <button id="uploadBtn">Upload Image</button>
-
-    <!-- Butang Download (sembunyi sehingga gambar dimuat naik) -->
-    <button id="downloadBtn" style="display: none;">Download Image</button>
 
     <script src="script.js"></script>
 </body>
