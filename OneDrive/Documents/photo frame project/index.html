@@ -4,23 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photo Frame</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link ke fail styles.css -->
 </head>
 <body>
-    <!-- Gambar yang dipaparkan -->
-    <img id="output_image" src="output_image.jpg" alt="Framed Image">
 
-    <!-- Butang untuk memuat turun gambar -->
+    <h1>Upload Image to Photo Frame</h1>
+
+    <!-- Butang Upload -->
+    <input type="file" id="imageUpload" accept="image/*">
+
+    <!-- Gambar akan dipaparkan di sini -->
+    <div id="imageContainer">
+        <img id="frame" src="photo_frame.png" alt="Photo Frame" />
+        <img id="uploadedImage" src="" alt="Uploaded Image" style="display: none;" />
+    </div>
+
+    <!-- Butang Download -->
     <button id="downloadBtn">Download Image</button>
 
-    <!-- Skrip JavaScript untuk muat turun gambar -->
-    <script>
-        document.getElementById("downloadBtn").addEventListener("click", function() {
-            var image = document.getElementById("output_image");
-            var link = document.createElement("a");
-            link.href = image.src; // Setkan sumber gambar
-            link.download = "frame-image.jpg"; // Nama fail yang akan dimuat turun
-            link.click();
-        });
-    </script>
+    <script src="script.js"></script> <!-- Link ke fail script.js -->
 </body>
 </html>
