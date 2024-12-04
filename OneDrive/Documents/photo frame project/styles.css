@@ -1,24 +1,55 @@
-document.getElementById('imageInput').addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const uploadedImage = document.getElementById('uploadedImage');
-            uploadedImage.src = e.target.result;
-            uploadedImage.style.display = 'block';  // Show the uploaded image
-        };
-        reader.readAsDataURL(file);
-    }
-});
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
 
-document.getElementById('downloadBtn').addEventListener('click', function() {
-    const image = document.getElementById('uploadedImage');
-    if (image.src) {
-        const link = document.createElement('a');
-        link.href = image.src;
-        link.download = 'downloaded_image.png';
-        link.click();
-    } else {
-        alert('No image to download');
-    }
-});
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.frame {
+    position: relative;
+    width: 300px;
+    height: 400px;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #000;
+}
+
+.upload-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.upload-btn:hover {
+    background-color: #45a049;
+}
+
+.download-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.download-btn:hover {
+    background-color: #007B9A;
+}
