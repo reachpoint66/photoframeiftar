@@ -12,7 +12,7 @@ body {
     text-align: center;
 }
 
-.frame {
+.frame-container {
     position: relative;
     display: inline-block;
 }
