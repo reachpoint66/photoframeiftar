@@ -1,33 +1,33 @@
-// Get references to the elements
+// Dapatkan elemen-elemen dari HTML
 const uploadInput = document.getElementById("uploadInput");
 const uploadBtn = document.getElementById("uploadBtn");
 const downloadBtn = document.getElementById("downloadBtn");
 const photoFrame = document.getElementById("photo-frame");
 
-// Event listener for upload button
+// Event listener untuk butang upload
 uploadBtn.addEventListener("click", () => {
-    uploadInput.click(); // Trigger file input click
+    uploadInput.click(); // Trigger klik pada input fail
 });
 
-// Event listener for file input change (when user selects a file)
+// Event listener untuk perubahan input fail (apabila gambar dipilih)
 uploadInput.addEventListener("change", (event) => {
     const file = event.target.files[0];
     if (file) {
         const reader = new FileReader();
         reader.onload = function (e) {
-            // Set the photo frame background to the uploaded image
+            // Set gambar dalam photo frame
             photoFrame.style.backgroundImage = `url(${e.target.result})`;
-            downloadBtn.style.display = "inline";  // Show the download button
+            downloadBtn.style.display = "inline";  // Tunjukkan butang download
         };
         reader.readAsDataURL(file);
     }
 });
 
-// Event listener for download button
+// Event listener untuk butang download
 downloadBtn.addEventListener("click", () => {
-    const imageUrl = photoFrame.style.backgroundImage.slice(5, -2);  // Extract image URL
+    const imageUrl = photoFrame.style.backgroundImage.slice(5, -2);  // Ambil URL gambar
     const link = document.createElement("a");
     link.href = imageUrl;
-    link.download = "photo_frame_image.jpg";  // Download filename
+    link.download = "photo_frame_image.jpg";  // Nama fail untuk muat turun
     link.click();
 });
