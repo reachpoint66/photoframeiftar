@@ -10,11 +10,13 @@ body {
 
 .container {
     text-align: center;
+    position: relative;  /* Pastikan elemen berada dalam posisi relatif */
 }
 
 .frame-container {
     position: relative;
     display: inline-block;
+    z-index: 1;  /* Frame dan gambar di belakang butang */
 }
 
 #uploadedImage {
@@ -23,6 +25,7 @@ body {
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 0;  /* Gambar dimuat naik di belakang frame */
 }
 
 #photoFrame {
@@ -31,17 +34,19 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 1;
+    z-index: 2;  /* Frame di depan gambar */
 }
 
 .upload-btn {
     margin-top: 20px;
     padding: 10px;
     font-size: 16px;
+    z-index: 3;  /* Butang upload di depan frame */
 }
 
 .download-btn {
     margin-top: 20px;
     padding: 10px;
     font-size: 16px;
+    z-index: 3;  /* Butang download di depan frame */
 }

@@ -5,22 +5,22 @@ document.getElementById('imageInput').addEventListener('change', function(event)
         reader.onload = function(e) {
             const uploadedImage = document.getElementById('uploadedImage');
             uploadedImage.src = e.target.result;
-            uploadedImage.style.display = 'block';  // Show the uploaded image
+            uploadedImage.style.display = 'block';  // Tampilkan gambar yang dimuat naik
 
-            // Once the image is loaded, draw it into the canvas
+            // Setelah gambar dimuat naik, lukis ke dalam canvas
             uploadedImage.onload = function() {
                 const canvas = document.getElementById('canvas');
                 const ctx = canvas.getContext('2d');
                 
-                // Set canvas size to match the frame
-                canvas.width = 300; // width of the frame
-                canvas.height = 400; // height of the frame
+                // Tetapkan saiz canvas untuk sepadan dengan saiz frame
+                canvas.width = 300; // Lebar frame
+                canvas.height = 400; // Tinggi frame
 
-                // Draw the frame first (background)
+                // Lukis frame dahulu (latar belakang)
                 const photoFrame = document.getElementById('photoFrame');
                 ctx.drawImage(photoFrame, 0, 0, canvas.width, canvas.height);
                 
-                // Draw the uploaded image on top of the frame
+                // Lukis gambar yang dimuat naik di atas frame
                 ctx.drawImage(uploadedImage, 0, 0, canvas.width, canvas.height);
             };
         };
@@ -36,6 +36,6 @@ document.getElementById('downloadBtn').addEventListener('click', function() {
         link.download = 'photo_frame_image.png';
         link.click();
     } else {
-        alert('No image to download');
+        alert('Tiada gambar untuk dimuat turun');
     }
 });
