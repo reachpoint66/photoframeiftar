@@ -1,52 +1,24 @@
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #f4f4f4;
-}
+document.getElementById('imageInput').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const uploadedImage = document.getElementById('uploadedImage');
+            uploadedImage.src = e.target.result;
+            uploadedImage.style.display = 'block';  // Show the uploaded image
+        };
+        reader.readAsDataURL(file);
+    }
+});
 
-.container {
-    text-align: center;
-    position: relative;  /* Pastikan elemen berada dalam posisi relatif */
-}
-
-.frame-container {
-    position: relative;
-    display: inline-block;
-    z-index: 1;  /* Frame dan gambar di belakang butang */
-}
-
-#uploadedImage {
-    width: 300px;
-    height: 400px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 0;  /* Gambar dimuat naik di belakang frame */
-}
-
-#photoFrame {
-    width: 300px;
-    height: 400px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2;  /* Frame di depan gambar */
-}
-
-.upload-btn {
-    margin-top: 20px;
-    padding: 10px;
-    font-size: 16px;
-    z-index: 3;  /* Butang upload di depan frame */
-}
-
-.download-btn {
-    margin-top: 20px;
-    padding: 10px;
-    font-size: 16px;
-    z-index: 3;  /* Butang download di depan frame */
-}
+document.getElementById('downloadBtn').addEventListener('click', function() {
+    const image = document.getElementById('uploadedImage');
+    if (image.src) {
+        const link = document.createElement('a');
+        link.href = image.src;
+        link.download = 'downloaded_image.png';
+        link.click();
+    } else {
+        alert('No image to download');
+    }
+});

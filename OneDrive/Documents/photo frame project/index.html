@@ -8,21 +8,13 @@
 </head>
 <body>
     <div class="container">
-        <div class="frame-container">
-            <!-- Gambar frame (hanya akan dipaparkan apabila gambar dimuat naik) -->
-            <img id="photoFrame" src="photo_frame.png" alt="Photo Frame" style="display: none;">
-            <!-- Gambar yang dimuat naik oleh pengguna -->
-            <img id="uploadedImage" src="" alt="Uploaded Image" style="display: none;">
+        <div class="frame">
+            <img id="photoFrame" src="photo_frame.png" alt="Photo Frame">
+            <img id="uploadedImage" src="" alt="Uploaded Image" />
         </div>
 
-        <!-- Butang untuk memuat naik gambar -->
         <input type="file" id="imageInput" class="upload-btn" accept="image/*">
-
-        <!-- Butang untuk memuat turun gambar -->
         <button id="downloadBtn" class="download-btn">Download Image</button>
-
-        <!-- Canvas untuk menggabungkan gambar dengan frame -->
-        <canvas id="canvas" style="display:none;"></canvas>
     </div>
 
     <script src="script.js"></script>
