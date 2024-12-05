@@ -9,11 +9,14 @@
 <body>
     <div class="container">
         <div class="frame">
-            <canvas id="canvas" width="300" height="400"></canvas>
+            <img id="photoFrame" src="photo_frame.png" alt="Photo Frame">
+            <img id="uploadedImage" src="" alt="Uploaded Image" />
         </div>
 
         <input type="file" id="imageInput" class="upload-btn" accept="image/*">
         <button id="downloadBtn" class="download-btn">Download Image</button>
+        <!-- Hidden canvas for combining images -->
+        <canvas id="canvas" style="display:none;"></canvas>
     </div>
 
     <script src="script.js"></script>
