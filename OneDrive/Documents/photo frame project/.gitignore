@@ -25,3 +25,15 @@ Searches/
 Pictures/
 *.log
 NTUSER.DAT
+
+*.DAT
+*.ini
+*.docx
+AppData/
+Desktop/
+Downloads/
+Music/
+Pictures/
+Saved Games/
+Videos/
+
