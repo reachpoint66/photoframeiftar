@@ -3,36 +3,35 @@ document.getElementById('imageInput').addEventListener('change', function(event)
     if (file) {
         const reader = new FileReader();
         reader.onload = function(e) {
-            const uploadedImage = new Image();
+            const uploadedImage = document.getElementById('uploadedImage');
             uploadedImage.src = e.target.result;
-            uploadedImage.onload = function() {
-                const canvas = document.getElementById('canvas');
-                const ctx = canvas.getContext('2d');
-                
-                // Gambar frame
-                const photoFrame = new Image();
-                photoFrame.src = 'photo_frame.png';
-                photoFrame.onload = function() {
-                    // Lukis frame dan gambar
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    ctx.drawImage(photoFrame, 0, 0, canvas.width, canvas.height);  // Gambar frame
-                    ctx.drawImage(uploadedImage, 50, 50, 200, 300);  // Gambar yang dimuat naik
-                    
-                    // Butang download kini aktif
-                    document.getElementById('downloadBtn').disabled = false;
-                };
-            };
+            uploadedImage.style.display = 'block'; // Show the uploaded image
         };
         reader.readAsDataURL(file);
     }
 });
 
-// Fungsi untuk muat turun gambar
 document.getElementById('downloadBtn').addEventListener('click', function() {
     const canvas = document.getElementById('canvas');
-    const imageUrl = canvas.toDataURL('image/png');
-    const link = document.createElement('a');
-    link.href = imageUrl;
-    link.download = 'combined_image.png';
-    link.click();
+    const ctx = canvas.getContext('2d');
+
+    // Get the frame and uploaded image
+    const photoFrame = document.getElementById('photoFrame');
+    const uploadedImage = document.getElementById('uploadedImage');
+
+    // Set canvas size to match frame
+    canvas.width = photoFrame.naturalWidth;
+    canvas.height = photoFrame.naturalHeight;
+
+    // Draw the frame and uploaded image on the canvas
+    ctx.drawImage(photoFrame, 0, 0, canvas.width, canvas.height);
+    ctx.drawImage(uploadedImage, 0, 0, canvas.width, canvas.height);
+
+    // Create a link to download the image
+    canvas.toBlob(function(blob) {
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'framed_image.png';
+        link.click();
+    }, 'image/png');
 });
