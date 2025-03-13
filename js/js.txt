@@ -3,25 +3,27 @@ document.getElementById('imageInput').addEventListener('change', function (event
     const canvas = document.getElementById('uploadedCanvas');
     const ctx = canvas.getContext('2d');
 
-    canvas.width = 1080;
-    canvas.height = 1080;
+    // Set canvas size to 1080x1080 for higher quality
+    canvas.width = 1080;  // Width of the canvas
+    canvas.height = 1080; // Height of the canvas
 
     if (file) {
         const reader = new FileReader();
         reader.onload = function (e) {
             const img = new Image();
             img.onload = function () {
-                const aspectRatio = img.width / img.height;
+                const imageAspectRatio = img.width / img.height;
+                const canvasAspectRatio = canvas.width / canvas.height;
                 let drawWidth, drawHeight, offsetX, offsetY;
 
-                if (aspectRatio > 1) {
+                if (imageAspectRatio > canvasAspectRatio) {
                     drawHeight = canvas.height;
-                    drawWidth = drawHeight * aspectRatio;
+                    drawWidth = drawHeight * imageAspectRatio;
                     offsetX = (canvas.width - drawWidth) / 2;
                     offsetY = 0;
                 } else {
                     drawWidth = canvas.width;
-                    drawHeight = drawWidth / aspectRatio;
+                    drawHeight = drawWidth / imageAspectRatio;
                     offsetX = 0;
                     offsetY = (canvas.height - drawHeight) / 2;
                 }
@@ -36,7 +38,9 @@ document.getElementById('imageInput').addEventListener('change', function (event
 });
 
 document.getElementById('frameSelector').addEventListener('change', function () {
-    document.getElementById('photoFrame').src = this.value;
+    const selectedFrame = this.value;
+    const frameElement = document.getElementById('photoFrame');
+    frameElement.src = selectedFrame;
 });
 
 document.getElementById('downloadBtn').addEventListener('click', function () {
@@ -45,16 +49,20 @@ document.getElementById('downloadBtn').addEventListener('click', function () {
     const frame = document.getElementById('photoFrame');
     const uploadedCanvas = document.getElementById('uploadedCanvas');
 
-    canvas.width = 1080;
-    canvas.height = 1080;
+    // Set canvas size to 1080x1080 for the downloaded image
+    canvas.width = 1080;  // Width of the final download canvas
+    canvas.height = 1080; // Height of the final download canvas
 
     const frameImg = new Image();
     frameImg.onload = function () {
+        // Draw the uploaded image first
         ctx.drawImage(uploadedCanvas, 0, 0, canvas.width, canvas.height);
+
+        // Draw the frame image over the uploaded image
         ctx.drawImage(frameImg, 0, 0, canvas.width, canvas.height);
 
         const link = document.createElement('a');
-        link.href = canvas.toDataURL('image/png', 1.0);
+        link.href = canvas.toDataURL('image/png', 1.0);  // Best quality image
         link.download = 'photo_with_frame.png';
         link.click();
     };
