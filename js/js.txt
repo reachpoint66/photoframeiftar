@@ -6,10 +6,10 @@ document.addEventListener("DOMContentLoaded", function() {
     const canvas = document.getElementById("uploadedCanvas");
     const ctx = canvas.getContext("2d");
 
-    // Tukar bingkai berdasarkan pilihan pengguna
+    // Tukar bingkai apabila pengguna pilih dari dropdown
     frameSelector.addEventListener("change", function() {
         let selectedFrame = this.value;
-        photoFrame.src = "https://reachpoint66.github.io/photoframeiftar/assets/" + selectedFrame;
+        photoFrame.src = "assets/" + selectedFrame;
     });
 
     // Muat naik gambar pengguna ke atas bingkai
@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 const img = new Image();
                 img.src = e.target.result;
                 img.onload = function() {
-                    // Sesuaikan saiz canvas dan gambar
                     canvas.width = 1080;
                     canvas.height = 1080;
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
