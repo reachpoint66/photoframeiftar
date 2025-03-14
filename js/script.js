@@ -1,17 +1,14 @@
 document.addEventListener("DOMContentLoaded", function() {
     const frameSelector = document.getElementById("frameSelector");
     const photoFrame = document.getElementById("photoFrame");
-    const uploadedCanvas = document.getElementById("uploadedCanvas");
-    const fileInput = document.getElementById("imageInput");
+    const fileInput = document.getElementById("fileInput");
     const downloadBtn = document.getElementById("downloadBtn");
 
-    const canvas = document.getElementById("uploadedCanvas");
-    const ctx = canvas.getContext("2d");
-
-    // Function to update frame preview
+    // Fungsi untuk mengubah bingkai
     function updateFrame() {
         const selectedFrame = frameSelector.value;
-        photoFrame.src = `assets/${selectedFrame}`;
+        console.log("Selected Frame:", selectedFrame); // Debugging
+        photoFrame.src = "assets/" + selectedFrame;
     }
 
     frameSelector.addEventListener("change", updateFrame);
@@ -23,10 +20,18 @@ document.addEventListener("DOMContentLoaded", function() {
             reader.onload = function(e) {
                 const img = new Image();
                 img.onload = function() {
-                    canvas.width = photoFrame.clientWidth;
-                    canvas.height = photoFrame.clientHeight;
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    const canvas = document.createElement("canvas");
+                    const ctx = canvas.getContext("2d");
+
+                    // Tetapkan saiz canvas mengikut saiz bingkai
+                    canvas.width = photoFrame.width;
+                    canvas.height = photoFrame.height;
+
                     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(photoFrame, 0, 0, canvas.width, canvas.height);
+
+                    // Simpan imej yang diubah pada kanvas
+                    document.getElementById("uploadedCanvas").src = canvas.toDataURL("image/png");
                 };
                 img.src = e.target.result;
             };
@@ -34,13 +39,26 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
+    // Fungsi untuk muat turun gambar dengan bingkai
     downloadBtn.addEventListener("click", function() {
-        const downloadLink = document.createElement("a");
-        downloadBtn.href = canvas.toDataURL("image/png");
-        downloadBtn.download = "framed_photo.png";
-        downloadBtn.click();
-    });
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
 
-    // Set default frame
-    updateFrame();
+        const uploadedImage = document.getElementById("uploadedCanvas");
+        if (!uploadedImage.src || uploadedImage.src.indexOf("data:image") === -1) {
+            alert("Sila muat naik gambar terlebih dahulu.");
+            return;
+        }
+
+        canvas.width = photoFrame.width;
+        canvas.height = photoFrame.height;
+
+        ctx.drawImage(uploadedImage, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(photoFrame, 0, 0, canvas.width, canvas.height);
+
+        const link = document.createElement("a");
+        link.href = canvas.toDataURL("image/png");
+        link.download = "framed_photo.png";
+        link.click();
+    });
 });
