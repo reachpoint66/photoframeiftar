@@ -1,43 +1,37 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const frameSelector = document.getElementById("frameSelector");
-    const fileInput = document.getElementById("fileInput");
+    const frameSelect = document.getElementById("frameSelect");
+    const fileInput = document.getElementById("uploadImage");
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
     const downloadBtn = document.getElementById("downloadBtn");
 
-    // Set ukuran canvas
-    canvas.width = 500;
-    canvas.height = 500;
+    // Tetapkan saiz canvas kepada 1080x1080
+    canvas.width = 1080;
+    canvas.height = 1080;
 
     let frameImage = new Image();
     let userImage = new Image();
 
-    // Fungsi untuk update frame
+    // Fungsi untuk memuatkan bingkai
     function updateFrame() {
-        const frameFile = `assets/${frameSelector.value}`;
-        frameImage.src = frameFile;
-
-        frameImage.onload = function () {
-            drawCanvas();
-        };
+        frameImage.src = frameSelect.value;
+        frameImage.onload = drawCanvas;
     }
 
-    // Apabila pengguna pilih gambar
+    // Apabila pengguna memilih gambar
     fileInput.addEventListener("change", function (event) {
         const file = event.target.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = function (e) {
                 userImage.src = e.target.result;
-                userImage.onload = function () {
-                    drawCanvas();
-                };
+                userImage.onload = drawCanvas;
             };
             reader.readAsDataURL(file);
         }
     });
 
-    // Fungsi untuk melukis pada canvas
+    // Fungsi untuk melukis imej atas canvas
     function drawCanvas() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         if (userImage.src) {
@@ -56,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
         link.click();
     });
 
-    // Muatkan frame awal
+    // Muatkan bingkai awal
     updateFrame();
-    frameSelector.addEventListener("change", updateFrame);
+    frameSelect.addEventListener("change", updateFrame);
 });
