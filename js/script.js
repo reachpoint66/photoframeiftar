@@ -1,64 +1,60 @@
 document.addEventListener("DOMContentLoaded", function() {
     const frameSelector = document.getElementById("frameSelector");
-    const photoFrame = document.getElementById("photoFrame");
     const fileInput = document.getElementById("fileInput");
+    const canvas = document.getElementById("photoCanvas");
+    const ctx = canvas.getContext("2d");
     const downloadBtn = document.getElementById("downloadBtn");
 
-    // Fungsi untuk mengubah bingkai
+    // Set saiz canvas
+    canvas.width = 500;
+    canvas.height = 500;
+
+    let selectedFrame = "assets/1.png"; // Bingkai default
+
+    // Fungsi untuk kemaskini bingkai
     function updateFrame() {
-        const selectedFrame = frameSelector.value;
-        console.log("Selected Frame:", selectedFrame); // Debugging
-        photoFrame.src = "assets/" + selectedFrame;
+        selectedFrame = "assets/" + frameSelector.value;
+        drawImage(); // Lukis semula apabila bingkai ditukar
     }
 
     frameSelector.addEventListener("change", updateFrame);
 
+    let uploadedImage = null;
+
+    // Fungsi untuk upload gambar
     fileInput.addEventListener("change", function(event) {
         const file = event.target.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = function(e) {
-                const img = new Image();
-                img.onload = function() {
-                    const canvas = document.createElement("canvas");
-                    const ctx = canvas.getContext("2d");
-
-                    // Tetapkan saiz canvas mengikut saiz bingkai
-                    canvas.width = photoFrame.width;
-                    canvas.height = photoFrame.height;
-
-                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    ctx.drawImage(photoFrame, 0, 0, canvas.width, canvas.height);
-
-                    // Simpan imej yang diubah pada kanvas
-                    document.getElementById("uploadedCanvas").src = canvas.toDataURL("image/png");
-                };
-                img.src = e.target.result;
+                uploadedImage = new Image();
+                uploadedImage.src = e.target.result;
+                uploadedImage.onload = drawImage;
             };
             reader.readAsDataURL(file);
         }
     });
 
-    // Fungsi untuk muat turun gambar dengan bingkai
+    // Fungsi untuk melukis gambar dan bingkai
+    function drawImage() {
+        const frame = new Image();
+        frame.src = selectedFrame;
+        frame.onload = function() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Kosongkan canvas
+
+            if (uploadedImage) {
+                ctx.drawImage(uploadedImage, 50, 50, 400, 400); // Lukis gambar yang diupload
+            }
+
+            ctx.drawImage(frame, 0, 0, canvas.width, canvas.height); // Lukis bingkai di atas gambar
+        };
+    }
+
+    // Fungsi untuk muat turun gambar
     downloadBtn.addEventListener("click", function() {
-        const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext("2d");
-
-        const uploadedImage = document.getElementById("uploadedCanvas");
-        if (!uploadedImage.src || uploadedImage.src.indexOf("data:image") === -1) {
-            alert("Sila muat naik gambar terlebih dahulu.");
-            return;
-        }
-
-        canvas.width = photoFrame.width;
-        canvas.height = photoFrame.height;
-
-        ctx.drawImage(uploadedImage, 0, 0, canvas.width, canvas.height);
-        ctx.drawImage(photoFrame, 0, 0, canvas.width, canvas.height);
-
         const link = document.createElement("a");
-        link.href = canvas.toDataURL("image/png");
-        link.download = "framed_photo.png";
+        link.download = "photo_with_frame.png";
+        link.href = canvas.toDataURL();
         link.click();
     });
 });
