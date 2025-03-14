@@ -1,0 +1,34 @@
+ * Serving Flask app 'app'
+ * Debug mode: on
+Uploaded image size: (1568, 1960)
+Frame size: (1200, 1200)
+Image width: 1568, Image height: 1960
+Frame width: 1200, Frame height: 1200
+Resized image size: 784x980
+Pasting image at offset: (208, 150)
+Image pasted into frame.
+Image saved to output_image.jpg
+Uploaded image size: (380, 253)
+Frame size: (1200, 1200)
+Image width: 380, Image height: 253
+Frame width: 1200, Frame height: 1200
+Resized image size: 190x126
+Pasting image at offset: (505, 577)
+Image pasted into frame.
+Image saved to output_image.jpg
+Uploaded image size: (380, 253)
+Frame size: (1200, 1200)
+Image width: 380, Image height: 253
+Frame width: 1200, Frame height: 1200
+Resized image size: 190x126
+Pasting image at offset: (505, 577)
+Image pasted into frame.
+Image saved to output_image.jpg
+Uploaded image size: (1067, 1700)
+Frame size: (1200, 1200)
+Image width: 1067, Image height: 1700
+Frame width: 1200, Frame height: 1200
+Resized image size: 533x850
+Pasting image at offset: (333, 215)
+Image pasted into frame.
+Image saved to output_image.jpg

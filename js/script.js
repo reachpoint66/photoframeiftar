@@ -1,64 +1,57 @@
-document.getElementById('imageInput').addEventListener('change', function (event) {
-    const file = event.target.files[0];
-    const canvas = document.getElementById('uploadedCanvas');
-    const ctx = canvas.getContext('2d');
+document.addEventListener("DOMContentLoaded", function() {
+    const frameSelector = document.getElementById("frameSelector");
+    const photoFrame = document.getElementById("photoFrame");
+    const uploadedCanvas = document.getElementById("uploadedCanvas");
+    const fileInput = document.getElementById("fileInput");
+    const downloadBtn = document.getElementById("downloadBtn");
 
-    canvas.width = 1080;
-    canvas.height = 1080;
+    frameSelector.addEventListener("change", function() {
+        photoFrame.src = this.value;
+    });
 
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            const img = new Image();
-            img.onload = function () {
-                const imageAspectRatio = img.width / img.height;
-                const canvasAspectRatio = canvas.width / canvas.height;
-                let drawWidth, drawHeight, offsetX, offsetY;
-
-                if (imageAspectRatio > canvasAspectRatio) {
-                    drawHeight = canvas.height;
-                    drawWidth = drawHeight * imageAspectRatio;
-                    offsetX = (canvas.width - drawWidth) / 2;
-                    offsetY = 0;
-                } else {
-                    drawWidth = canvas.width;
-                    drawHeight = drawWidth / imageAspectRatio;
-                    offsetX = 0;
-                    offsetY = (canvas.height - drawHeight) / 2;
-                }
-
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+    fileInput.addEventListener("change", function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const canvas = document.getElementById("uploadedCanvas");
+                const ctx = canvas.getContext("2d");
+                const img = new Image();
+                img.onload = function() {
+                    canvas.width = this.width;
+                    canvas.height = this.height;
+                    const ctx = canvas.getContext("2d");
+                    ctx.drawImage(this, 0, 0, canvas.width, canvas.height);
+                };
+                reader.readAsDataURL(file);
+                reader.onloadend = function() {
+                    document.getElementById("uploadedCanvas").src = reader.result;
+                };
             };
-            img.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-    }
-});
+            reader.readAsDataURL(file);
+        }
+    });
 
-document.getElementById('frameSelector').addEventListener('change', function () {
-    const selectedFrame = this.value;
-    document.getElementById('photoFrame').src = selectedFrame;
-});
+    downloadBtn.addEventListener("click", function() {
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        const frame = document.getElementById("photoFrame");
+        const uploadedImage = document.getElementById("uploadedCanvas");
 
-document.getElementById('downloadBtn').addEventListener('click', function () {
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    const frame = document.getElementById('photoFrame');
-    const uploadedCanvas = document.getElementById('uploadedCanvas');
+        if (!uploadedImage.src || uploadedImage.src.indexOf("data:image") === -1) {
+            alert("Please upload an image first.");
+            return;
+        }
 
-    canvas.width = 1080;
-    canvas.height = 1080;
+        canvas.width = frame.width;
+        canvas.height = frame.height;
 
-    const frameImg = new Image();
-    frameImg.onload = function () {
-        ctx.drawImage(uploadedCanvas, 0, 0, canvas.width, canvas.height);
-        ctx.drawImage(frameImg, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(uploadedImage, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(frame, 0, 0, canvas.width, canvas.height);
 
-        const link = document.createElement('a');
-        link.href = canvas.toDataURL('image/png', 1.0);
-        link.download = 'photo_with_frame.png';
+        const link = document.createElement("a");
+        link.href = canvas.toDataURL("image/png");
+        link.download = "framed_photo.png";
         link.click();
-    };
-    frameImg.src = frame.src;
+    });
 });
